@@ -6,7 +6,7 @@ public class Aluno {
     private String email;
     private String curso;
     private String telefone;
-    private int numeroDeFaltas = 0;
+    private int numeroDeFaltas;
     private double[] notas = new double[3];
 
     public String getMatricula () {
@@ -53,8 +53,8 @@ public class Aluno {
         return numeroDeFaltas;
     }
 
-    public void setNumeroDeFaltas () {
-        this.numeroDeFaltas++;
+    public void setNumeroDeFaltas (int numeroDeFaltas) {
+        this.numeroDeFaltas = numeroDeFaltas;
     }
 
     public double[] getNotas () {
@@ -67,9 +67,9 @@ public class Aluno {
             return;
         }
 
-        for (int i = 0; i < notas.length; i++) {
-            if (notas[i] < 0 || notas[i] > 100) {
-                System.out.println("Só é permitido notas entre 0 e 100. Nota fornecida fora do intervalo: " + notas[i]);
+        for (double nota : notas) {
+            if (nota < 0 || nota > 100) {
+                System.out.println("Só é permitido notas entre 0 e 100. Nota fornecida fora do intervalo: " + nota);
                 return;
             }
         }
@@ -77,8 +77,9 @@ public class Aluno {
         this.notas = Arrays.copyOf(notas, notas.length);
     }
 
-    public String calcularPercentualDeFalta () {
-        return this.numeroDeFaltas / 100 + "%";
+    public double calcularPercentualDeFalta () {
+        int numeroMaximoDeFaltas = 16;
+        return (double) this.numeroDeFaltas / numeroMaximoDeFaltas * 100;
     }
 
     public double calcularMedia () {

@@ -32,7 +32,9 @@ public class Main {
                     break;
 
                 case 3:
-                    lancarFaltas(alunos);
+                    System.out.println("Digite o numero de faltas: ");
+                    int numeroDeFaltas = scanner.nextInt();
+                    lancarFaltas(alunos, numeroDeFaltas);
                     break;
 
                 case 4:
@@ -59,10 +61,13 @@ public class Main {
         Aluno novoAluno = new Aluno();
 
         System.out.println("Matrícula: ");
-        novoAluno.setMatricula(JOptionPane.showInputDialog("Digite o número de Matrícula"));
+        novoAluno.setMatricula(JOptionPane.showInputDialog("Digite o número de Matrícula: "));
 
         System.out.println("Nome: ");
-        novoAluno.setNome(JOptionPane.showInputDialog("Digite o nome do Aluno"));
+        novoAluno.setNome(JOptionPane.showInputDialog("Digite o nome do aluno: "));
+
+        System.out.println("Email: ");
+        novoAluno.setEmail(JOptionPane.showInputDialog("Digite o email do aluno: "));
 
         System.out.println("Curso: ");
         novoAluno.setCurso(JOptionPane.showInputDialog("Digite o curso do aluno: "));
@@ -99,7 +104,7 @@ public class Main {
         }
     }
 
-    private static void lancarFaltas (List<Aluno> alunos) {
+    private static void lancarFaltas (List<Aluno> alunos, int numeroDeFaltas) {
         String matricula = JOptionPane.showInputDialog("Digite o número de Matrícula");
 
         Optional<Aluno> alunoOpt = alunos.stream()
@@ -109,7 +114,7 @@ public class Main {
         if (alunoOpt.isPresent()) {
             Aluno aluno = alunoOpt.get();
 
-            aluno.setNumeroDeFaltas();
+            aluno.setNumeroDeFaltas(numeroDeFaltas);
 
             System.out.println("Faltas lançadas para o aluno " + aluno.getNome());
         } else {
@@ -128,12 +133,13 @@ public class Main {
         for (Aluno aluno : alunos) {
             System.out.println("Matrícula: " + aluno.getMatricula());
             System.out.println("Nome: " + aluno.getNome());
+            System.out.println("Email: " + aluno.getEmail());
             System.out.println("Curso: " + aluno.getCurso());
             System.out.println("Telefone: " + aluno.getTelefone());
             System.out.println("Notas: " + Arrays.toString(aluno.getNotas()));
             System.out.println("Número de Faltas: " + aluno.getNumeroDeFaltas());
             System.out.println("Status de Aprovação: " + aluno.alunoFoiAprovado());
-            System.out.println("Percentual de faltas: " + aluno.calcularPercentualDeFalta());
+            System.out.println("Percentual de faltas: " + aluno.calcularPercentualDeFalta() + "%");
             System.out.println("------------------------");
         }
     }
