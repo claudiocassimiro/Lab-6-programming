@@ -1,14 +1,16 @@
+import java.util.Arrays;
+
 public class Aluno {
     private String matricula;
     private String nome;
     private String email;
     private String curso;
     private String telefone;
-    private int numeroDeFaltas;
-    private Double[] notas = new Double[3];
+    private int numeroDeFaltas = 0;
+    private double[] notas = new double[3];
 
     public String getMatricula () {
-        return matricula;
+        return this.matricula;
     }
 
     public void setMatricula (String matricula) {
@@ -51,33 +53,46 @@ public class Aluno {
         return numeroDeFaltas;
     }
 
-    public void setNumeroDeFaltas (int numeroDeFaltas) {
-        this.numeroDeFaltas += numeroDeFaltas;
+    public void setNumeroDeFaltas () {
+        this.numeroDeFaltas++;
     }
 
-    public Double[] getNotas () {
+    public double[] getNotas () {
         return notas;
     }
 
-    public void setNotas (double nota, int index) {
-        if (this.notas.length - 1 <= index) {
-            this.notas[index] = nota;
+    public void setNotas(double[] notas) {
+        if (notas.length != this.notas.length) {
+            System.out.println("O número de notas fornecidas não corresponde ao esperado.");
             return;
         }
 
-        System.out.println("O index escolhido está fora do comprimento do array");
+        for (int i = 0; i < notas.length; i++) {
+            if (notas[i] < 0 || notas[i] > 100) {
+                System.out.println("Só é permitido notas entre 0 e 100. Nota fornecida fora do intervalo: " + notas[i]);
+                return;
+            }
+        }
 
+        this.notas = Arrays.copyOf(notas, notas.length);
     }
 
-    public String alunoFoiAprovado () {
-        double media = 0.0;
+    public String calcularPercentualDeFalta () {
+        return this.numeroDeFaltas / 100 + "%";
+    }
+
+    public double calcularMedia () {
         double sumNotas = 0.0;
 
         for (Double nota : this.notas) {
             sumNotas += nota;
         }
 
-        media = sumNotas / this.notas.length;
+        return sumNotas / this.notas.length;
+    }
+
+    public String alunoFoiAprovado () {
+        double media = calcularMedia();
 
         if (media >= 70 && this.numeroDeFaltas <= 15) {
             return "Aprovado";
